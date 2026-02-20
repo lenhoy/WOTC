@@ -11,7 +11,6 @@ This directory contains Python scripts for visualizing simulation data. Most scr
 
 * **`plot_heading.py`**: Plots the vessel's actual Heading ($\psi$) against the Desired Heading ($\psi_d$) over time. Includes usage of a configuration dialog to customize title and labels.
 * **`plot_speed.py`**: Plots the vessel's Total Speed ($U$) against the Desired Speed ($U_d$) over time for a single simulation run.
-* **`plot_trajectory_DP.py`**: Visualizes the vessel's North-East (XY) position trajectory. Designed for Dynamic Positioning (DP) scenarios.
 * **`plot_trajectory_WO.py`**: Plots the vessel's North-East trajectory for WO operations. It includes additional markers for the reference path (`etad`) and `p0` to visualize tracking performance.
 * **`plot_trajectory_WO_triangles.py`**: A variation of the WO trajectory plot. Instead of dots, it uses triangles to represent the reference path (`etad`), allowing you to visualize the desired heading along the path.
 * **`plot_trajectory_varying_current.py`**: Plots the vessel trajectory superimposed with current vectors to visualize environmental forces. Features an interactive control panel (sliders) to adjust arrow size, density, and scaling in real-time.
