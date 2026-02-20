@@ -1,0 +1,56 @@
+function plotSimResults(filePath)
+% PLOTSIMRESULTS - Loads data from a simulation .mat file and creates plots.
+% If no filePath is provided, it opens a file browser.
+
+% --- 1. Handle Input ---
+% If the function is called without a file path, open a dialog to select a file
+if nargin == 0
+    [fileName, folderPath] = uigetfile('*.mat', 'Select a Simulation Result File');
+    if fileName == 0 % User clicked cancel
+        disp('No file selected. Plotting cancelled.');
+        return;
+    end
+    filePath = fullfile(folderPath, fileName);
+end
+
+% --- 2. Load the Data ---
+% The saved file contains a variable named 'out'
+load(filePath, 'out');
+
+% --- 3. Extract Data from the Loaded Structure ---
+% This assumes the 'out' structure and 'eta' signal exist
+try
+    time = out.eta.Time;
+    eta_x = out.eta.Data(:, 1); % North position
+    eta_y = out.eta.Data(:, 2); % East position
+catch
+    error('Could not find required signal "eta" in the loaded file: %s', filePath);
+end
+
+% You'll need to load p0 as well. Since p0 wasn't saved in the 'out'
+% object, you might need to load it from your parameter file or define it.
+% For this example, we'll hardcode it.
+p0 = [50; 0]; % Example circle center
+p0_x = p0(1);
+p0_y = p0(2);
+
+% --- 4. Create the Plot ---
+figure;
+hold on;
+scatter(eta_y, eta_x, 25, time, 'filled');
+plot(p0_y, p0_x, 'rx', 'MarkerSize', 12, 'LineWidth', 2);
+hold off;
+
+% Formatting
+title(['Ship Trajectory from: ' filePath], 'Interpreter', 'none');
+xlabel('East Position (m)');
+ylabel('North Position (m)');
+legend('Ship Trajectory', 'Circle Center (p_0)');
+grid on;
+axis equal;
+cb = colorbar;
+ylabel(cb, 'Time (s)');
+
+disp(['Plot created successfully from: ' filePath]);
+
+end
